@@ -351,7 +351,12 @@ function wp_cache_writers_exit() {
 }
 
 function wp_super_cache_query_vars() {
-	global $wp_super_cache_query;
+	global $wp_super_cache_query, $wp_query;
+
+	if ( ! is_object( $wp_query ) ) {
+		return array();
+	}
+
 	if ( is_search() )
 		$wp_super_cache_query[ 'is_search' ] = 1;
 	if ( is_page() )
